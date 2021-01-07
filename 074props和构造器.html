@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script src="./js/react.development.js" crossorigin></script>
+    <script src="./js/react-dom.development.js" crossorigin></script>
+    <script src="./js/prop-types.js" crossorigin></script>
+    <script src="./js/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+      class Person extends React.Component {
+        static propTypes = {
+          name: PropTypes.string.isRequired,
+          speak: PropTypes.func
+        }
+        static defaultProps = {
+          sex: '未知'
+        } 
+        constructor(props){
+          super(props)
+          // React构造器的作用：
+          // 1. 给state初始化
+          // 2. 为时间处理函数绑定示例
+          // 3. 构造器释放传入props，是否传递给super，取决于是否希望在构造函数中可以访问this.props
+          console.log(this.props) // 如果super（props)则，输出undefined
+        }
+        render() {
+          console.log(this);
+          const { name, sex, age } = this.props;
+          return (
+            <div>
+              <h2></h2>
+              <ul>
+                <li>name:{this.props.name}</li>
+                <li>sex:{sex}</li>
+                <li>age:{age + 1}</li>
+              </ul>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <div>
+          <Person name="tom" age={22} />
+        </div>,
+        document.getElementById("test")
+      );
+
+    </script>
+  </body>
+</html>

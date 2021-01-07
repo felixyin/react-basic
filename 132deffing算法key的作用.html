@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+    <style>
+      .list {
+        width: 200px;
+        height: 150px;
+        background: lightblue;
+        overflow: auto;
+      }
+      .news {
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script src="./js/17/react.development.js" crossorigin></script>
+    <script src="./js/17/react-dom.development.js" crossorigin></script>
+    <script src="./js/17/prop-types.js" crossorigin></script>
+    <script src="./js/17/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+      class Person extends React.Component {
+        state = {
+          persons: [
+            { id: 1, name: "小刘", age: 18 },
+            { id: 2, name: "小孙", age: 19 },
+          ],
+        };
+        addPerson = () => {
+          const { persons } = this.state;
+          const p = { id: 3, name: "小王", age: 20 };
+          this.setState({ persons: [p, ...persons] }); // diff比较时，会全部重新更新dom
+        };
+        render() {
+          return (
+            <div>
+              <button type="button" onClick={this.addPerson}>
+                添加一个小王
+              </button>
+              <h2>展示人员列表-idx</h2>
+              <ul>
+                {this.state.persons.map((n, idx) => {
+                  return (
+                    <li key={idx}>
+                      {n.id},{n.name},{n.age}
+                      <input type="text" />
+                    </li>
+                  );
+                })}
+              </ul>
+              <hr />
+              <h2>展示人员列表-id</h2>
+              <ul>
+                {this.state.persons.map((n, idx) => {
+                  return (
+                    <li key={n.id}>
+                      {n.id},{n.name},{n.age}
+                      <input type="text" />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<Person />, document.getElementById("test"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+      const VDOM = (
+        <div id="test">
+          <h1>Hello，React</h1>
+        </div>
+      );
+      const test = document.getElementById("test");
+      ReactDOM.render(VDOM, test);
+
+      console.log(VDOM);
+      console.log(typeof VDOM);
+      console.log(VDOM instanceof Object);
+
+      console.log(test);
+    </script>
+  </body>
+</html>

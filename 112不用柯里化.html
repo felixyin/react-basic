@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script src="./js/react.development.js" crossorigin></script>
+    <script src="./js/react-dom.development.js" crossorigin></script>
+    <script src="./js/prop-types.js" crossorigin></script>
+    <script src="./js/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+      class Login extends React.Component {
+        state = {
+          username: "",
+          password: "",
+        };
+        handleSubmit = (event) => {
+          // event.stopPropagation();
+          event.preventDefault();
+          const { username, password } = this.state;
+          alert(`${username},${password}`);
+          return false;
+        };
+        /**
+         * 重要概念
+         *
+         * 高阶函数：
+         * 1. 一个函数，接收另一个函数作为参数，那么就是高阶函数
+         * 2. 一个函数，返回以一个函数，那么就是高阶函数
+         * 函数柯里化：
+         * 通过函数调用继续返回函数的方式，实现多次接收参数在最后统一处理的编码形式，叫做函数函数柯里化
+         */
+        handleSaveFormData = (inputName, event) => {
+          this.setState({ [inputName]: event.target.value });
+        };
+        render() {
+          return (
+            <form action="http://www.yinbin.ink" onSubmit={this.handleSubmit}>
+              用户名：
+              <input
+                ref={(c) => (this.username = c)}
+                type="text"
+                name="username"
+                onChange={(event) => {
+                  this.handleSaveFormData("username", event);
+                }}
+              />
+              密码：
+              <input
+                ref={(c) => (this.password = c)}
+                type="password"
+                name="password"
+                onChange={(event) => {
+                  this.handleSaveFormData("password", event);
+                }}
+              />
+              <button type="submit">登陆 </button>
+            </form>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <div>
+          <Login />
+        </div>,
+        document.getElementById("test")
+      );
+    </script>
+  </body>
+</html>

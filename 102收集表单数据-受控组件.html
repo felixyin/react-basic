@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script src="./js/react.development.js" crossorigin></script>
+    <script src="./js/react-dom.development.js" crossorigin></script>
+    <script src="./js/prop-types.js" crossorigin></script>
+    <script src="./js/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+      class Login extends React.Component {
+        state = {
+          username: "",
+          password: "",
+        };
+        handleSubmit = (event) => {
+          event.stopPropagation(); // 阻止事件冒泡
+          event.preventDefault(); // 阻止默认行为，对form来说是表单提交
+          // 测试1
+          // const { username, password } = this;
+          // alert(`${username.value},${password.value}`);
+          // 测试2
+          const { username, password } = this.state;
+          alert(`${username},${password}`);
+          return false;
+        };
+        handleChangeUsername = (event) => {
+          this.setState({ username: event.target.value });
+        };
+        handleChangePassword = (event) => {
+          this.setState({ password: event.target.value });
+        };
+        render() {
+          // 组件的值，类似：双向数据绑定（但react没实现），随着输入值自动维护到state中，即受控组件
+          return (
+            <form action="http://www.yinbin.ink" onSubmit={this.handleSubmit}>
+              用户名：
+              <input
+                ref={(c) => (this.username = c)}
+                type="text"
+                name="username"
+                onChange={this.handleChangeUsername}
+              />
+              密码：
+              <input
+                ref={(c) => (this.password = c)}
+                type="password"
+                name="password"
+                onChange={this.handleChangePassword}
+              />
+              <button type="submit">登陆 </button>
+            </form>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <div>
+          <Login />
+        </div>,
+        document.getElementById("test")
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script
+      src="./js/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="./js/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="./js/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+    class Weather extends React.Component {
+      state = { // 状态机 data to view
+        isHot:false,
+        wind:'微风'
+      }
+      render(){
+        const {isHot,wind} = this.state
+        return <h1 onClick={this.clickHandler1}>今天天气很{isHot?'炎热':'凉爽'}，{wind}</h1>
+      }
+      clickHandler3() { // 找不到this
+        const { isHot } = this.state
+        this.setState({ isHot: !isHot })
+      }
+      clickHandler2 = function () { // 找不到this
+        const { isHot } = this.state
+        this.setState({ isHot: !isHot })
+      }
+      clickHandler1 = function () { // 可找到this方法1
+        const { isHot } = this.state
+        this.setState({ isHot: !isHot })
+      }.bind(this)
+      clickHandler = ()=>{ // 可找到this方法2 ；方法3，是通过在构造器从原型对象上的clickHandler方法重新bind（this）后赋值给实例方法；方法4是在render方法事件绑定的时候bind(this)。推荐方法2写法
+        // 箭头函数与function（）区别是：如果this找不到，即用此方法块外围的this，也就是下面代码写法执行效果相等
+        // function(){this is you code}.bind(this) === ()=>{this is you code} , clickHandler1 与 clickHandler执行效果相同
+        const {isHot} = this.state
+        this.setState({isHot:!isHot})
+      }
+    }
+    ReactDOM.render(<Weather/>,document.getElementById('test'))
+    </script>
+  </body>
+</html>

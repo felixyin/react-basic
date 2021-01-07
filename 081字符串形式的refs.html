@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script src="./js/react.development.js" crossorigin></script>
+    <script src="./js/react-dom.development.js" crossorigin></script>
+    <script src="./js/prop-types.js" crossorigin></script>
+    <script src="./js/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+      class Demo extends React.Component {
+        showData = () => {
+          console.log(this);
+          // dom方式获取值
+          // const input = document.getElementById("input1");
+          // alert(input.value);
+
+          // ref="input1" 相当于 dom中的id
+          const { input1 } = this.refs;
+          alert(input1.value);
+        };
+        showData2 = () =>{
+          const { input2 } = this.refs;
+          alert(input2.value);
+        }
+        render() {
+          return (
+            <div>
+              <input
+                type="text"
+                placeholder="点击按钮提示数据"
+                id="input1"
+                ref="input1"
+              />
+              <button onClick={this.showData} ref="btn1">
+                点我提示左侧数据
+              </button>
+              <input onBlur={this.showData2} type="text" placeholder="失去焦点提示数据" ref="input2" />
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <div>
+          <Demo />
+        </div>,
+        document.getElementById("test")
+      );
+    </script>
+  </body>
+</html>

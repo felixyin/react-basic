@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+  </head>
+  <body>
+    <!-- ... HTML ... -->
+    <div id="test"></div>
+
+    <!-- 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script src="./js/react.development.js" crossorigin></script>
+    <script src="./js/react-dom.development.js" crossorigin></script>
+    <script src="./js/prop-types.js" crossorigin></script>
+    <script src="./js/babel.min.js"></script>
+
+    <!-- jsx -->
+    <script type="text/babel">
+      class Demo extends React.Component {
+        // 调用后可以返回一个容器，该容器可以存储被ref标识的节点，该容器是专用的，current只能存储一个dom节点
+        myRef = React.createRef();
+        myBtn = React.createRef();
+        showData = () => {
+          alert(this.myRef.current.value);
+        };
+        showData2 = (event) => { // event 即 dom中的event
+          alert(event.target.value); // 不要过度使用ref
+        };
+        render() {
+          return (
+            <div>
+              <input
+                type="text"
+                placeholder="点击按钮提示数据"
+                ref={this.myRef}
+              />
+              <button onClick={this.showData} ref={this.myBtn}>
+                点我提示左侧数据
+              </button>
+              <input
+                type="text"
+                placeholder="失去焦点获取值"
+                onBlur={this.showData2}
+              />
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <div>
+          <Demo />
+        </div>,
+        document.getElementById("test")
+      );
+    </script>
+  </body>
+</html>
